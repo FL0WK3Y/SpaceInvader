@@ -1,4 +1,5 @@
 import pygame
+import random
 from Player import Player
 from Alien import Alien
 class GamePlay:
@@ -18,7 +19,11 @@ class GamePlay:
         self.mousex , self.mousey =(0,0) 
         self.player = Player(screen.get_height() - 100)
         self.aliens = []
-        self.aliens.append(Alien(1,1,0))
+        self.alienrows = 5
+        self.aliencols = 15
+        for y in range (self.alienrows):
+            for x in range(self.aliencols):
+                self.aliens.append(Alien(x,y,random.randint(0,1)))
     def update(self, events):        
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
