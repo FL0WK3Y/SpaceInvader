@@ -1,11 +1,11 @@
 import pygame
 
 class Alien:
-    def __init__(self, x,y, atype, imgfile):
+    def __init__(self, x,y, atype,):
         self.x =x
         self.y =y 
         self.atype = atype
-        self.frame=0
+        self.frame = 0
         self.image = pygame.image.load("/Users/gregorirodriguez/Desktop/Games/Space_Invaders/InvadersImages/aliens_sm.png")
         self.sprite_size = 32
     

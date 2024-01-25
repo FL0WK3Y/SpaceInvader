@@ -1,6 +1,6 @@
 import pygame
 from Player import Player
-import Alien from Alien
+from Alien import Alien
 class GamePlay:
     def __init__(self, screen) :
         self.font = pygame.font.SysFont('Arial',30, True, False)
