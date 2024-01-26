@@ -33,6 +33,12 @@ class GamePlay:
         self.dy = 10
         self.direction = self.dx
         self.explosions = []
+        self.font2 = pygame.font.SysFont('Arial',80, True, False)
+        self.title = self.font2.render("Game over ",True,(255,255,255))
+        self.title_position = ((screen.get_width()- self.title.get_width())//2,(screen.get_height() - self.title.get_height())//2)
+
+        self.title_won = self.font2.render("You Won",True,(255,255,255))
+        self.title_position_won = ((screen.get_width()- self.title_won.get_width())//2,(screen.get_height() - self.title_won.get_height())//2)
     def update(self, events):        
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -68,7 +74,12 @@ class GamePlay:
         else:
             pygame.draw.rect(screen, self.button_color, self.button_rect)
         screen.blit(self.button_text, (self.button_rect[0]+ (self.button_width - self.button_text.get_width()) /2, self.button_rect[1]+ (self.button_height - self.button_text.get_height()) /2 ))
-        
+        if self.player.lives<=0:
+            screen.blit(self.title,self.title_position)
+            return self
+        elif len(self.aliens)<= 0:
+            screen.blit(self.title_won,self.title_position_won)
+            return self
 
         for a in self.aliens:
             a.draw(screen)
