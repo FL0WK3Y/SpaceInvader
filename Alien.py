@@ -1,5 +1,7 @@
 import pygame
 import Settings
+import random
+from Lazer import Lazer
 
 class Alien(pygame.sprite.Sprite):
     def __init__(self, x,y, atype,):
@@ -20,6 +22,8 @@ class Alien(pygame.sprite.Sprite):
         else:
             self.frame = 0
     def draw(self, screen):
+        if random.randint(0,3000)<1:
+            Settings.abullets.append(Lazer(self.x * self.sprite_size + Settings.xoffset, self.y * self.sprite_size + Settings.yoffset, 5))
         if Settings.xoffset % 10 == 0:
             self.flip_frame()
         self.rect.topleft = (self.x * self.sprite_size + Settings.xoffset, self.y * self.sprite_size + Settings.yoffset)

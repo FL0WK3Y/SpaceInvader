@@ -4,6 +4,7 @@ from Player import Player
 from Alien import Alien
 from Explosion import Explosion
 import Settings
+
 class GamePlay:
     def __init__(self, screen) :
         self.font = pygame.font.SysFont('Arial',30, True, False)
@@ -73,6 +74,15 @@ class GamePlay:
             a.draw(screen)
         
         self.player.draw(screen)
+        
+        deadabullets = []
+        
+        for l in Settings.abullets:
+            if l.y > screen.get_height():
+                deadabullets.append(l)
+            l.draw(screen)
+        for l in deadabullets:
+            Settings.abullets.remove(l)
         
         update_y = False
         if(Settings.xoffset+self.aliencols * 32) > self.right_border:
