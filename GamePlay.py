@@ -39,11 +39,29 @@ class GamePlay:
 
         self.title_won = self.font2.render("You Won",True,(255,255,255))
         self.title_position_won = ((screen.get_width()- self.title_won.get_width())//2,(screen.get_height() - self.title_won.get_height())//2)
+        self.screen = screen
+    
     def update(self, events):        
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 self.mousex, self.mousey = event.pos
                 if self.button_rect[0] <= self.mousex <= self.button_rect[0] + self.button_rect[2] and self.button_rect[1] <= self.mousey <= self.button_rect[1] + self.button_rect[3]:   
+                    
+                    #reset values when click back button 
+                    self.player = Player(self.screen.get_height() - 100)
+                    self.aliens = []
+                    self.alienrows = 5
+                    self.aliencols = 15
+                    self.lives = 3
+                    Settings.xoffset = 10
+                    Settings.yoffset = 50
+                    Settings.abullets = []
+                    for y in range (self.alienrows):
+                        for x in range(self.aliencols):
+                            self.aliens.append(Alien(x,y,random.randint(0,1)))
+
+                    
+                    
                     return self.main_menu
             if event.type == pygame.MOUSEMOTION:
                 self.mousex, self.mousey = event.pos
