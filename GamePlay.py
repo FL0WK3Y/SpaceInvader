@@ -47,10 +47,13 @@ class GamePlay:
         else:
             pygame.draw.rect(screen, self.button_color, self.button_rect)
         screen.blit(self.button_text, (self.button_rect[0]+ (self.button_width - self.button_text.get_width()) /2, self.button_rect[1]+ (self.button_height - self.button_text.get_height()) /2 ))
-        self.player.draw(screen)
+        
 
         for a in self.aliens:
             a.draw(screen)
+        
+        self.player.draw(screen)
+        
         update_y = False
         if(Settings.xoffset+self.aliencols * 32) > self.right_border:
             self.direction *= - 1
