@@ -1,14 +1,17 @@
 import pygame
 import Settings
 
-class Alien:
+class Alien(pygame.sprite.Sprite):
     def __init__(self, x,y, atype,):
+        pygame.sprite.Sprite.__init__(self)
         self.x =x
         self.y =y 
         self.atype = atype
         self.frame = 0
         self.image = pygame.image.load("/Users/gregorirodriguez/Desktop/Games/Space_Invaders/InvadersImages/aliens_sm.png")
         self.sprite_size = 32
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (self.x * self.sprite_size + Settings.xoffset, self.y * self.sprite_size + Settings.yoffset)
         
 
     def flip_frame(self):
@@ -19,5 +22,5 @@ class Alien:
     def draw(self, screen):
         if Settings.xoffset % 10 == 0:
             self.flip_frame()
-
+        self.rect.topleft = (self.x * self.sprite_size + Settings.xoffset, self.y * self.sprite_size + Settings.yoffset)
         screen.blit(self.image, [self.x * self.sprite_size + Settings.xoffset, self.y * self.sprite_size + Settings.yoffset, self.sprite_size, self.sprite_size],(self.frame * self.sprite_size, self.sprite_size * self.atype, self.sprite_size,self.sprite_size))

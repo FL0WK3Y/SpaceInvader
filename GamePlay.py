@@ -2,6 +2,7 @@ import pygame
 import random
 from Player import Player
 from Alien import Alien
+from Explosion import Explosion
 import Settings
 class GamePlay:
     def __init__(self, screen) :
@@ -30,6 +31,7 @@ class GamePlay:
         self.dx = 2
         self.dy = 10
         self.direction = self.dx
+        self.explosions = []
     def update(self, events):        
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -39,6 +41,24 @@ class GamePlay:
             if event.type == pygame.MOUSEMOTION:
                 self.mousex, self.mousey = event.pos
         self.player.update()
+
+        found =False
+        deadbullets = []
+        if self.player.bullets != [] and self.aliens != []:
+            for b in self.player.bullets:
+                found = False
+                #this spritecollide is determining whether a bullet is colliding with an alien 
+                for a in pygame.sprite.spritecollide(b,self.aliens, 0 ):
+                    self.aliens.remove(a)
+                    self.explosions.append(Explosion(a.x,a.y))
+                    a.kill()
+                    found = True
+                if found:
+                    deadbullets.append(b)
+            for b in deadbullets:
+                self.player.bullets.remove(b)
+                b.kill()
+
         return self
     
     def draw(self, screen):
@@ -68,3 +88,12 @@ class GamePlay:
         
         if update_y :
             Settings.yoffset += self.dy
+
+        deadexplosions=[]
+        for e in self.explosions:
+            e.draw(screen)
+            if e.framey < 0:
+                deadexplosions.append(e)
+        for e in deadexplosions:
+            self.explosions.remove(e)
+
