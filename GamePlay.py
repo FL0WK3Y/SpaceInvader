@@ -2,6 +2,7 @@ import pygame
 import random
 from Player import Player
 from Alien import Alien
+import Settings
 class GamePlay:
     def __init__(self, screen) :
         self.font = pygame.font.SysFont('Arial',30, True, False)
@@ -24,6 +25,11 @@ class GamePlay:
         for y in range (self.alienrows):
             for x in range(self.aliencols):
                 self.aliens.append(Alien(x,y,random.randint(0,1)))
+        self.left_border = 50
+        self.right_border = screen.get_width() - self.left_border
+        self.dx = 2
+        self.dy = 10
+        self.direction = self.dx
     def update(self, events):        
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -45,3 +51,17 @@ class GamePlay:
 
         for a in self.aliens:
             a.draw(screen)
+        update_y = False
+        if(Settings.xoffset+self.aliencols * 32) > self.right_border:
+            self.direction *= - 1
+            update_y = True
+            Settings.xoffset = self.right_border - self.aliencols * 32 
+        
+        if Settings.xoffset < self.left_border:
+            self.direction *= - 1
+            update_y = True
+            Settings.xoffset =self.left_border
+        Settings.xoffset += self.direction
+        
+        if update_y :
+            Settings.yoffset += self.dy
